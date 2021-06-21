@@ -44,7 +44,8 @@ namespace MentoriaSTI3.View
                         break;
 
                     case nameof(BtnPedidos):
-                        //Conteudo.Content = new UcPedidos();
+                        Conteudo.Content = new UcPedido();
+                        break;
                     default:
                         break;
                 }
