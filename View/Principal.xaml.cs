@@ -1,15 +1,10 @@
-﻿using MentoriaSTI3.View.UserControls;
+﻿using MentoriaDevSTI3.Data.Context;
+using MentoriaDevSTI3.Data.Entidades;
+using MentoriaSTI3.View.UserControls;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace MentoriaSTI3.View
 {
@@ -21,11 +16,20 @@ namespace MentoriaSTI3.View
         public Principal()
         {
             InitializeComponent();
+            AplicarMigration(); // Não recomendado, pois causa problemas de performance apenas um teste de vericação das migrações do banco
         }
+
+
 
         private void BtnMenu_Click(object sender, RoutedEventArgs e)
         {
             InicializarUc(sender);
+        }
+
+        private void AplicarMigration()
+        {
+            using var context = new MentoriaDevSTI3Context();
+            context.AplicarMigration();
         }
 
 
@@ -51,5 +55,25 @@ namespace MentoriaSTI3.View
                 }
             }
         }
+
+        //private void Testes()
+        //{
+        //    using var context = new MentoriaDevSTI3Context();
+
+        //    //context.Database.EnsureCreated(); //Code-first
+
+        //    //context.Clientes.Add(new Clientes {
+        //    //    Nome = "Leo",
+        //    //    Cep = "17203550",
+        //    //    Cidade = "Jau",
+        //    //    DataNascimento = DateTime.Now,
+        //    //    Endereco = "Rua J",
+        //    //});
+
+        //    var clientes = context.Clientes.First(x => x.Id == 1);
+        //    context.Clientes.Remove(clientes);
+        //    context.SaveChanges();
+
+        //}
     }
 }

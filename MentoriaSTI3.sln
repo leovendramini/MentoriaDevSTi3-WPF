@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30011.22
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoriaSTI3", "MentoriaSTI3.csproj", "{45B95B80-5B9C-4189-9BB6-A09A7DA7E688}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MentoriaSTI3", "MentoriaSTI3.csproj", "{45B95B80-5B9C-4189-9BB6-A09A7DA7E688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MentoriaDevSTI3.Data", "..\MentoriaDevSTI3.Data\MentoriaDevSTI3.Data.csproj", "{0B7D52EF-134A-429F-AE31-7116C67D9B01}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{45B95B80-5B9C-4189-9BB6-A09A7DA7E688}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45B95B80-5B9C-4189-9BB6-A09A7DA7E688}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45B95B80-5B9C-4189-9BB6-A09A7DA7E688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B7D52EF-134A-429F-AE31-7116C67D9B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B7D52EF-134A-429F-AE31-7116C67D9B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B7D52EF-134A-429F-AE31-7116C67D9B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B7D52EF-134A-429F-AE31-7116C67D9B01}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
