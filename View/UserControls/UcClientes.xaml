@@ -107,8 +107,9 @@
                                     Click="btnAlterar_Click" />
 
                             <Button x:Name="btnRemover"
-                                    Width="100" Margin="10,0,0,0" Content="Remover" 
-                                    Style="{StaticResource BtnArrendondado}" Background="DarkRed"/>
+                                    Width="100" Margin="10,0,0,0" Content="Remover"  Tag="{Binding}"
+                                    Style="{StaticResource BtnArrendondado}" Background="DarkRed"
+                                    Click="btnRemover_Click"/>
 
                         </StackPanel>
 

@@ -31,12 +31,12 @@
                 
                 <StackPanel>
                     <Label Content="Cliente"/>
-                    <ComboBox ItemsSource="{Binding ListaClientes}" DisplayMemberPath="Nome"/>
+                    <ComboBox x:Name="CmbCliente" ItemsSource="{Binding ListaClientes}" DisplayMemberPath="Nome"/>
                 </StackPanel>
 
                 <StackPanel Grid.Column="3">
                     <Label Content="Pagamento"/>
-                    <ComboBox ItemsSource="{Binding ListaPagamentos}"/>
+                    <ComboBox x:Name="CmbFormaPagamento" ItemsSource="{Binding ListaPagamentos}"/>
                 </StackPanel>
             </Grid>
             

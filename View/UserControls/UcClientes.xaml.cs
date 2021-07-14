@@ -1,4 +1,5 @@
-﻿using MentoriaSTI3.ViewModel;
+﻿using MentoriaSTI3.Business;
+using MentoriaSTI3.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -27,8 +28,9 @@ namespace MentoriaSTI3.View.UserControls
             InitializeComponent();
 
             DataContext = UcClienteVm;
-            UcClienteVm.ClientesAdicionados = new ObservableCollection<ClienteViewModel>();
+//            UcClienteVm.ClientesAdicionados = new ObservableCollection<ClienteViewModel>();
             UcClienteVm.DataNascimento = new System.DateTime(1990, 1, 1);
+            CarregarRegistros();
         }
 
         private void btnAdicionar_Click(object sender, RoutedEventArgs e)
@@ -56,14 +58,26 @@ namespace MentoriaSTI3.View.UserControls
             PreencherCampos(cliente);
         }
 
+        private void btnRemover_Click(object sender, RoutedEventArgs e)
+        {
+            var cliente = (sender as Button).Tag as ClienteViewModel;
+            Remover(cliente.Id);
+        }
+
         private void PreencherCampos(ClienteViewModel cliente)
         {
+            UcClienteVm.Id = cliente.Id;
             UcClienteVm.Nome = cliente.Nome;
             UcClienteVm.DataNascimento = cliente.DataNascimento;
             UcClienteVm.Cep = cliente.Cep;
             UcClienteVm.Endereco = cliente.Endereco;
             UcClienteVm.Cidade = cliente.Cidade;
             UcClienteVm.Alteracao = true;
+        }
+
+        private void CarregarRegistros()
+        {
+            UcClienteVm.ClientesAdicionados = new ObservableCollection<ClienteViewModel>(new ClienteBusiness().Listar());
         }
 
         private void AdicionarCliente()
@@ -78,19 +92,44 @@ namespace MentoriaSTI3.View.UserControls
                 
             };
 
-            UcClienteVm.ClientesAdicionados.Add(novoCliente);
+            //UcClienteVm.ClientesAdicionados.Add(novoCliente);
+            new ClienteBusiness().Adicionar(novoCliente);
+            CarregarRegistros();
         }
 
         private void AlterarCliente()
         {
-            //Desenvolver na aula de banco de dados
+            var clienteAlteracao = new ClienteViewModel
+            {
+                Id = UcClienteVm.Id,
+                Nome = UcClienteVm.Nome,
+                DataNascimento = UcClienteVm.DataNascimento,
+                Endereco = UcClienteVm.Endereco,
+                Cidade = UcClienteVm.Cidade,
+                Cep = UcClienteVm.Cep,
+
+            };
+
+            new ClienteBusiness().Alterar(clienteAlteracao);
+            CarregarRegistros();
+        }
+
+        private void Remover(long id)
+        {
+            var resultado = MessageBox.Show("Tem certeza que deseja remover o Cliente ? ", "Atenção", MessageBoxButton.YesNo, MessageBoxImage.Warning);
+            if (resultado == MessageBoxResult.Yes)
+            {
+                new ClienteBusiness().Remover(id);
+                CarregarRegistros();
+                LimparCampos();
+            }
         }
 
         private void LimparCampos()
         {
             UcClienteVm.Nome = "";
             UcClienteVm.DataNascimento = new System.DateTime(1990, 1, 1);
-            UcClienteVm.Cep = 0;
+            UcClienteVm.Cep = "";
             UcClienteVm.Endereco = "";
             UcClienteVm.Cidade = "";
             UcClienteVm.Alteracao = false;
@@ -107,5 +146,7 @@ namespace MentoriaSTI3.View.UserControls
 
             return true;
         }
+
+
     }
 }
