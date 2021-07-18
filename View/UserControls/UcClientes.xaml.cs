@@ -1,8 +1,10 @@
 ﻿using MentoriaSTI3.Business;
 using MentoriaSTI3.ViewModel;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -62,6 +64,11 @@ namespace MentoriaSTI3.View.UserControls
         {
             var cliente = (sender as Button).Tag as ClienteViewModel;
             Remover(cliente.Id);
+        }
+
+        private void TxtCep_LostFocus(object sender, RoutedEventArgs e)
+        {
+            BuscarCep((sender as TextBox).Text);
         }
 
         private void PreencherCampos(ClienteViewModel cliente)
@@ -147,6 +154,51 @@ namespace MentoriaSTI3.View.UserControls
             return true;
         }
 
+        private void BuscarCep(string cep)
+        {
+            //https://viacep.com.br/ws/01001000/json/
+            var cliente = new HttpClient
+            {
+                BaseAddress = new System.Uri("https://viacep.com.br")
+                
+            };
+            var response = cliente.GetAsync($"ws/{cep}/json/").Result;
 
+            if (response.IsSuccessStatusCode)
+            {
+                var EnderecoCompleto = response.Content.ReadAsStringAsync().Result;
+                var obj = JsonConvert.DeserializeObject<EnderecoViewModel>(EnderecoCompleto);
+                if (obj.Erro)
+                {
+                    MessageBox.Show("O CEP não existe", "Atenção!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+                else
+                {
+                    UcClienteVm.Endereco = $"{obj.Logradouro} - {obj.Bairro}";
+                    UcClienteVm.Cidade = $"{obj.Localidade}/{obj.UF}";
+                }
+                
+            }
+            else
+            {
+                MessageBox.Show("O CEP é inválido", "Atenção!", MessageBoxButton.OK, MessageBoxImage.Warning);
+                UcClienteVm.Endereco = "";
+                UcClienteVm.Cidade = "";
+                UcClienteVm.Cep = "";
+            }
+        }
+
+
+    }
+
+    public class EnderecoViewModel
+    {
+        public string Cep { get; set; }
+        public string Logradouro { get; set; }
+        public string Bairro { get; set; }
+        public string Localidade { get; set; }
+        public string UF { get; set; }
+
+        public bool Erro { get; set; }
     }
 }

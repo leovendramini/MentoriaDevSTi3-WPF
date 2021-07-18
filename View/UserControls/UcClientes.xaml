@@ -52,7 +52,8 @@
 
                 <StackPanel>
                     <Label Content="CEP"/>
-                    <TextBox Text="{Binding Cep}"/>
+                    <TextBox x:Name="TxtCep" Text="{Binding Cep}" LostFocus="TxtCep_LostFocus"
+                             />
                 </StackPanel>
  
                 <StackPanel Grid.Column="2">
